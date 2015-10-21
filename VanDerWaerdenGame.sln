@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanDerWaerdenGame.DesktopApp", "VanDerWaerdenGame.DesktopApp\VanDerWaerdenGame.DesktopApp.csproj", "{E1DD3CF0-500B-4203-863A-F523867055A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanDerWaerdenGame.Model", "VanDerWaerdenGame.Model\VanDerWaerdenGame.Model.csproj", "{5F8CCC63-8F9E-4744-970D-61D378F92A54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanDerWaerdenGame.Tests", "VanDerWaerdenGame.Tests\VanDerWaerdenGame.Tests.csproj", "{43332BFF-8793-434B-9F59-0E9F4866EA54}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Players", "Players", "{8A05BC43-0DCA-4389-A607-C63A8B10EB55}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ColorChoosers", "ColorChoosers", "{749F5C0A-8DA3-43A1-A50F-7A34C2321F36}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PositionChoosers", "PositionChoosers", "{D69AFF39-04DC-493E-AE5A-3B4C73B4B3F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomColorPlayer", "VanDerWaerdenGame.Players\ColorChooser\RandomColorPlayer\RandomColorPlayer.csproj", "{42747142-7418-4B2B-83D9-35871E5184CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralColorPlayer", "VanDerWaerdenGame.Players\ColorChooser\NeuralColorPlayer\NeuralColorPlayer.csproj", "{FFF9A1B1-1E27-4843-B3FF-DD257D70C8B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralPositionPlayer", "VanDerWaerdenGame.Players\PositionChoosers\NeuralPositionPlayer\NeuralPositionPlayer.csproj", "{E00B90BD-A8C3-41A6-8387-58EED1FD3A82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomPositionPlayer", "VanDerWaerdenGame.Players\PositionChoosers\RandomPositionPlayer\RandomPositionPlayer.csproj", "{C971A903-27BB-4D6E-BC7B-15CCFD0379B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1DD3CF0-500B-4203-863A-F523867055A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1DD3CF0-500B-4203-863A-F523867055A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1DD3CF0-500B-4203-863A-F523867055A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1DD3CF0-500B-4203-863A-F523867055A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F8CCC63-8F9E-4744-970D-61D378F92A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F8CCC63-8F9E-4744-970D-61D378F92A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F8CCC63-8F9E-4744-970D-61D378F92A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F8CCC63-8F9E-4744-970D-61D378F92A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43332BFF-8793-434B-9F59-0E9F4866EA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43332BFF-8793-434B-9F59-0E9F4866EA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43332BFF-8793-434B-9F59-0E9F4866EA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43332BFF-8793-434B-9F59-0E9F4866EA54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42747142-7418-4B2B-83D9-35871E5184CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42747142-7418-4B2B-83D9-35871E5184CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42747142-7418-4B2B-83D9-35871E5184CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42747142-7418-4B2B-83D9-35871E5184CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFF9A1B1-1E27-4843-B3FF-DD257D70C8B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFF9A1B1-1E27-4843-B3FF-DD257D70C8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFF9A1B1-1E27-4843-B3FF-DD257D70C8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFF9A1B1-1E27-4843-B3FF-DD257D70C8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E00B90BD-A8C3-41A6-8387-58EED1FD3A82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00B90BD-A8C3-41A6-8387-58EED1FD3A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00B90BD-A8C3-41A6-8387-58EED1FD3A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00B90BD-A8C3-41A6-8387-58EED1FD3A82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C971A903-27BB-4D6E-BC7B-15CCFD0379B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C971A903-27BB-4D6E-BC7B-15CCFD0379B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C971A903-27BB-4D6E-BC7B-15CCFD0379B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C971A903-27BB-4D6E-BC7B-15CCFD0379B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{749F5C0A-8DA3-43A1-A50F-7A34C2321F36} = {8A05BC43-0DCA-4389-A607-C63A8B10EB55}
+		{D69AFF39-04DC-493E-AE5A-3B4C73B4B3F8} = {8A05BC43-0DCA-4389-A607-C63A8B10EB55}
+		{42747142-7418-4B2B-83D9-35871E5184CD} = {749F5C0A-8DA3-43A1-A50F-7A34C2321F36}
+		{FFF9A1B1-1E27-4843-B3FF-DD257D70C8B9} = {749F5C0A-8DA3-43A1-A50F-7A34C2321F36}
+		{E00B90BD-A8C3-41A6-8387-58EED1FD3A82} = {D69AFF39-04DC-493E-AE5A-3B4C73B4B3F8}
+		{C971A903-27BB-4D6E-BC7B-15CCFD0379B4} = {D69AFF39-04DC-493E-AE5A-3B4C73B4B3F8}
+	EndGlobalSection
+EndGlobal
