@@ -8,5 +8,6 @@ namespace VanDerWaerdenGame.Model
 {
     public interface IPositionPlayer
     {
+        int GetPosition(BoardState board); 
     }
 }

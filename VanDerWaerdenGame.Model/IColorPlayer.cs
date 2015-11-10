@@ -8,5 +8,6 @@ namespace VanDerWaerdenGame.Model
 {
     public interface IColorPlayer
     {
+        int GetPosition(BoardState board);
     }
 }
