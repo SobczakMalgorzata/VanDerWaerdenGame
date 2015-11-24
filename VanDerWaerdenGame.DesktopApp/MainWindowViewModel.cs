@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VanDerWaerdenGame.Model;
+using VanDerWaerdenGame.Players.ColorChoosers;
+using VanDerWaerdenGame.Players.PositionChoosers;
 
 namespace VanDerWaerdenGame.DesktopApp
 {
@@ -11,12 +14,17 @@ namespace VanDerWaerdenGame.DesktopApp
     {
         public MainWindowViewModel() : base()
         {
-            Board = new int[]{ 0, 1, 1, 1, 0, 1, 1, 0 };
+            //Board = new int[]{ 0, 1, 1, 1, 0, 1, 1, 0 };
         }
 
-        public int[] Board { get { return board; } set { SetProperty(ref board, value); } }
-        private int[] board;
+        public GameManager GameManager { get { return gameManager; } set { SetProperty(ref gameManager, value); } }
+        private GameManager gameManager = new GameManager(3) { Player1 = new RandomPositionPlayer(), Player2 = new RandomColorPlayer() };
 
+        public void StartNewGame()
+        {
+            this.GameManager.Board = new int[0];
+            this.GameManager.StartGame();
+        }
 
 
     }

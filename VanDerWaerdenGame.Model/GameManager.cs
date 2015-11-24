@@ -25,20 +25,19 @@ namespace VanDerWaerdenGame.Model
         public GameManager(int endGameLengthCondition)
         {
             this.endGameLengthCondition = endGameLengthCondition;
-            //Player2 = new RandomColorPlayer(2);
         }
 
         /// <summary>
         /// Starts the game loop.
         /// </summary>
-        private async void StartGame()
+        public async void StartGame()
         {
             this.GameFinished = false;
             while (!DetectProgression(this.Board, EndGameLengthCondition))
             {
                 var nextPosition = player1.GetPosition(board);
                 var nextColor = player2.GetColor(new BoardState(board, nextPosition));
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 var tmpList = Board.ToList();
                 tmpList.Insert(nextPosition, nextColor);
                 this.Board = tmpList.ToArray();

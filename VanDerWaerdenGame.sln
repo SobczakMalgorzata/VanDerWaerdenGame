@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanDerWaerdenGame.Model", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanDerWaerdenGame.Tests", "VanDerWaerdenGame.Tests\VanDerWaerdenGame.Tests.csproj", "{43332BFF-8793-434B-9F59-0E9F4866EA54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VanDerWaerdenGame.Players", "VanDerWaerdenGame.Players\VanDerWaerdenGame.Players.csproj", "{D8B06F8D-5DD6-459E-AB57-0DCE5C57702F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{43332BFF-8793-434B-9F59-0E9F4866EA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43332BFF-8793-434B-9F59-0E9F4866EA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43332BFF-8793-434B-9F59-0E9F4866EA54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B06F8D-5DD6-459E-AB57-0DCE5C57702F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B06F8D-5DD6-459E-AB57-0DCE5C57702F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B06F8D-5DD6-459E-AB57-0DCE5C57702F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B06F8D-5DD6-459E-AB57-0DCE5C57702F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

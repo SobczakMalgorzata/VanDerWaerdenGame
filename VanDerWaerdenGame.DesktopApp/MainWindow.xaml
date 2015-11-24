@@ -28,7 +28,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <ItemsControl Grid.ColumnSpan="3" HorizontalAlignment="Center" 
-                      ItemsSource="{Binding Board}" >
+                      ItemsSource="{Binding GameManager.Board}" >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" />
@@ -40,7 +40,9 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20">
+            <Button x:Name="StartGameButton" Content="StartGame" Click="StartGameButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>
     

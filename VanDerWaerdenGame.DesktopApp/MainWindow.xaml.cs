@@ -23,6 +23,14 @@ namespace VanDerWaerdenGame.DesktopApp
         public MainWindow()
         {
             InitializeComponent();
+            
+        }
+
+        public MainWindowViewModel ViewModel => this.DataContext as MainWindowViewModel;
+
+        private void StartGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.StartNewGame();
         }
     }
 }
