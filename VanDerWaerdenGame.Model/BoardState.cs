@@ -16,6 +16,7 @@ namespace VanDerWaerdenGame.Model
         /// </summary>
         private int[] boardColors;
         public int[] BoardColors { get { return boardColors; } set { SetProperty(ref boardColors, value); } }
+        
         /// <summary>
         /// Position picked by Player 1
         /// -1 - Player 1 move
@@ -28,6 +29,7 @@ namespace VanDerWaerdenGame.Model
         /// Default constructor with empty board and waiting for move from Player 2.
         /// </summary>
         public BoardState() : this(new int[0], 0) { }
+
         /// <summary>
         /// Creates Board state with given parameters.
         /// </summary>

@@ -23,8 +23,6 @@ namespace VanDerWaerdenGame.Model.Tests
             result = GameManager.DetectProgression(new int[] { 1, 1, 2, 2, 1, 1 }, 3);
             Assert.IsFalse(result);
 
-
-
         }
     }
 }
