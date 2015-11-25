@@ -41,7 +41,9 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="20">
-            <Button x:Name="StartGameButton" Content="StartGame" Click="StartGameButton_Click"/>
+            <Button x:Name="StartGameButton" Content="Start Game" Click="StartGameButton_Click"/>
+            <Button x:Name="NextTurnButton" Content="Next Turn" Click="NextTurnButton_Click"/>
+            <Button x:Name="PlayTillEndButton" Content="Play till end" Click="PlayTillEndButton_Click"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -14,7 +14,8 @@ namespace VanDerWaerdenGame.Model.Tests
         [TestMethod()]
         public void GameManager_DetectProgression()
         {
-            Assert.IsFalse(GameManager.DetectProgression(new int[] { 1, 1, 2, 1 }, 3, 0, 1));
+
+            Assert.IsFalse(GameManager.DetectProgression(new int[]{ 1, 1, 2, 1 }, 3, 0, 1));
             Assert.IsTrue(GameManager.DetectProgression(new int[] { 0, 1, 1, 1 }, 3, 1, 1));
 
             var result = GameManager.DetectProgression(new int[]{ 1, 1, 2, 2, 1, 1, 1 }, 3);

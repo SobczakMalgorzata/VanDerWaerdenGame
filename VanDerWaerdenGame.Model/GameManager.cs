@@ -1,17 +1,21 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace VanDerWaerdenGame.Model
 {
     public class GameManager : BindableBase
     {
-        public int[] Board { get { return board; } set { SetProperty(ref board, value); } }
-        private int[] board = new int[0];
+        public ObservableCollection<int> Board { get { return board; }  private set { SetProperty(ref board, value); } }
+        private ObservableCollection<int> board;
+        private object _lock = new object();
+
         public int EndGameLengthCondition { get { return endGameLengthCondition; } set { SetProperty(ref endGameLengthCondition, value); } }
         private int endGameLengthCondition = 3;
         public IPositionPlayer Player1 { get { return player1; } set { SetProperty(ref player1, value); } }
@@ -24,25 +28,48 @@ namespace VanDerWaerdenGame.Model
         
         public GameManager(int endGameLengthCondition)
         {
+            board = new ObservableCollection<int>();
+            BindingOperations.EnableCollectionSynchronization(board, _lock);
             this.endGameLengthCondition = endGameLengthCondition;
+            this.GameFinished = false;
+
         }
 
         /// <summary>
         /// Starts the game loop.
         /// </summary>
-        public async void StartGame()
+        public async Task StartGame()
         {
             this.GameFinished = false;
-            while (!DetectProgression(this.Board, EndGameLengthCondition))
+
+            lock (_lock)
             {
-                var nextPosition = player1.GetPosition(board);
-                var nextColor = player2.GetColor(new BoardState(board, nextPosition));
-                //Thread.Sleep(1000);
-                var tmpList = Board.ToList();
-                tmpList.Insert(nextPosition, nextColor);
-                this.Board = tmpList.ToArray();
+                Board.Clear();
             }
-            this.GameFinished = true;
+
+           /// this.GameFinished = true;
+        }
+        
+        public void PlayTillEnd()
+        {
+            while (!DetectProgression(this.Board.ToArray(), EndGameLengthCondition))
+            {
+                IterateTurn();
+            }
+        }
+
+        public void IterateTurn()
+        {
+            if (GameFinished == false)
+            {
+                var nextPosition = player1.GetPosition(board.ToArray());
+                var nextColor = player2.GetColor(new BoardState(board.ToArray(), nextPosition));
+                lock (_lock)
+                {
+                    Board.Insert(nextPosition, nextColor);
+                }
+            }
+            Thread.Sleep(500);
         }
 
         /// <summary>
@@ -78,7 +105,7 @@ namespace VanDerWaerdenGame.Model
         {
             var color = board[front];
             progressionLength--;
-            for(int i = front+distance; i < board.Length && progressionLength > 0; progressionLength--)
+            for(int i = front+distance; i < board.Count() && progressionLength > 0; progressionLength--)
             {
                 if (color != board[i])
                     return false;

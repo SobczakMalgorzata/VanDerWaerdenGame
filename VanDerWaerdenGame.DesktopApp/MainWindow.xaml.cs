@@ -32,5 +32,15 @@ namespace VanDerWaerdenGame.DesktopApp
         {
             ViewModel.StartNewGame();
         }
+            
+        private void NextTurnButton_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Factory.StartNew(ViewModel.Turn);
+        }
+        
+        private void PlayTillEndButton_Click(object sender, RoutedEventArgs e)
+        {
+            Task.Factory.StartNew(ViewModel.PlayTillEnd);
+        }
     }
 }
