@@ -15,15 +15,15 @@ namespace VanDerWaerdenGame.DesktopApp
     {
         public MainWindowViewModel() : base()
         {
-            //Board = new int[]{ 0, 1, 1, 1, 0, 1, 1, 0 };
+
         }
 
         public GameManager GameManager { get { return gameManager; } set { SetProperty(ref gameManager, value); } }
-        private GameManager gameManager = new GameManager(3) { Player1 = new RandomPositionPlayer(), Player2 = new RandomColorPlayer() };
+        private GameManager gameManager = new GameManager(new VanDerWaerdenGameRules()) { Player1 = new RandomPositionPlayer(), Player2 = new RandomColorPlayer() };
 
         public void StartNewGame()
         {
-            this.GameManager.StartGame();
+            this.GameManager.NewGame();
         }
 
         public void Turn()

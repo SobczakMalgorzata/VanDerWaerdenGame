@@ -16,8 +16,8 @@ namespace VanDerWaerdenGame.Model
         private ObservableCollection<int> board;
         private object _lock = new object();
 
-        public int EndGameLengthCondition { get { return endGameLengthCondition; } set { SetProperty(ref endGameLengthCondition, value); } }
-        private int endGameLengthCondition = 3;
+        public IGameRules Rules { get { return rules; } set { SetProperty(ref rules, value); } }
+        private IGameRules rules;
         public IPositionPlayer Player1 { get { return player1; } set { SetProperty(ref player1, value); } }
         private IPositionPlayer player1;
         public IColorPlayer Player2 { get { return player2; } set { SetProperty(ref player2, value); } }
@@ -26,11 +26,11 @@ namespace VanDerWaerdenGame.Model
 
         private bool gameStarted = false;
         
-        public GameManager(int endGameLengthCondition)
+        public GameManager(IGameRules rules)
         {
-            board = new ObservableCollection<int>();
+            Board = new ObservableCollection<int>();
+            Rules = rules;
             BindingOperations.EnableCollectionSynchronization(board, _lock);
-            this.endGameLengthCondition = endGameLengthCondition;
             this.GameFinished = false;
 
         }
@@ -38,7 +38,7 @@ namespace VanDerWaerdenGame.Model
         /// <summary>
         /// Starts the game loop.
         /// </summary>
-        public async Task StartGame()
+        public void NewGame()
         {
             this.GameFinished = false;
 
@@ -46,21 +46,25 @@ namespace VanDerWaerdenGame.Model
             {
                 Board.Clear();
             }
-
-           /// this.GameFinished = true;
         }
         
+        /// <summary>
+        /// Makes moves till the game ends.
+        /// </summary>
         public void PlayTillEnd()
         {
-            while (!DetectProgression(this.Board.ToArray(), EndGameLengthCondition))
+            while (!Rules.IsFinalStateOfGame(this.Board.ToArray()))
             {
                 IterateTurn();
             }
         }
 
+        /// <summary>
+        /// Makes one move of each of players.
+        /// </summary>
         public void IterateTurn()
         {
-            if (GameFinished == false)
+            if (!Rules.IsFinalStateOfGame(Board.ToArray()))
             {
                 var nextPosition = player1.GetPosition(board.ToArray());
                 var nextColor = player2.GetColor(new BoardState(board.ToArray(), nextPosition));
@@ -70,48 +74,6 @@ namespace VanDerWaerdenGame.Model
                 }
             }
             Thread.Sleep(500);
-        }
-
-        /// <summary>
-        /// Detects if there exists a progression in board of length progressionLength.
-        /// </summary>
-        /// <param name="board">Board to be checked.</param>
-        /// <param name="progressionLength">Number of elements in progression.</param>
-        /// <returns></returns>
-        public static bool DetectProgression(int[] board, int progressionLength)
-        {
-            int distance = 0;
-            int distanceLimit = (board.Count()/progressionLength)+1;
-            for(distance = 1; distance <= distanceLimit; distance++)
-            {
-                for (int front = 0; front < board.Count() - distance * (progressionLength-1); front++)
-                {
-                    if (DetectProgression(board, progressionLength, front, distance))
-                        return true;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Checks if there is a progression of progressionLength elements starting from front with distance between elements in board.
-        /// </summary>
-        /// <param name="board">Board to be checked.</param>
-        /// <param name="progressionLength">Number of elements in progression.</param>
-        /// <param name="front">Index of starting element.</param>
-        /// <param name="distance">Distance from one element to another. 1 means that elements are next to each other.</param>
-        /// <returns></returns>
-        public static bool DetectProgression(int[] board, int progressionLength, int front, int distance)
-        {
-            var color = board[front];
-            progressionLength--;
-            for(int i = front+distance; i < board.Count() && progressionLength > 0; progressionLength--)
-            {
-                if (color != board[i])
-                    return false;
-                i += distance;
-            }
-            return true;
         }
     }
 }
