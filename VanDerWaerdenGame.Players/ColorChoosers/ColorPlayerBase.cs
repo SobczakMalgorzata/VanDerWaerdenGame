@@ -1,5 +1,4 @@
-﻿using Prism.Mvvm;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +7,8 @@ using VanDerWaerdenGame.Model;
 
 namespace VanDerWaerdenGame.Players.ColorChoosers
 {
-    public abstract class ColorPlayerBase : BindableBase, IColorPlayer
+    public abstract class ColorPlayerBase : PlayerBase, IColorPlayer
     {
-        protected int nColors = 2;
-        public int NColors { get { return nColors; } set { nColors = value; } }
-
-        public abstract int GetColor(BoardState board);
-        
+       public abstract int GetColor(BoardState board);
     }
 }

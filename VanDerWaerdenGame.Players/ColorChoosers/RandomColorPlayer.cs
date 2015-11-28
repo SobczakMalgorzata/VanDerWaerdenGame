@@ -9,12 +9,13 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
 {
     public class RandomColorPlayer : ColorPlayerBase
     {
-        private static Random rand = new Random();
+        public override string PlayerName { get { return "Random Player"; } }
 
         public override int GetColor(BoardState board)
         {
-            return rand.Next(0, NColors);
+            return rand.Next(0, this.NColors);
         }
 
+        private static Random rand = new Random();
     }
 }

@@ -9,6 +9,7 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
 {
     public class NeuralColorPlayer : ColorPlayerBase
     {
+        public override string PlayerName { get { return "Neural network Player"; } }
         public override int GetColor(BoardState board)
         {
             throw new NotImplementedException();

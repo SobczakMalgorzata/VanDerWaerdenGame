@@ -65,6 +65,8 @@
     </Compile>
     <Compile Include="ColorChoosers\NeuralColorPlayer.cs" />
     <Compile Include="ColorChoosers\RandomColorPlayer.cs" />
+    <Compile Include="PlayerBase.cs" />
+    <Compile Include="PositionChoosers\PositionPlayerBase.cs" />
     <Compile Include="PositionChoosers\RandomPositionPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -7,12 +7,13 @@ using VanDerWaerdenGame.Model;
 
 namespace VanDerWaerdenGame.Players.PositionChoosers
 {
-    public class RandomPositionPlayer : IPositionPlayer
+    public class RandomPositionPlayer : PositionPlayerBase
     {
-        private static Random rand = new Random();
-        public int GetPosition(int[] board)
+        public override int GetPosition(int[] board)
         {
             return rand.Next(0, board.Count()+1);
         }
+
+        private static Random rand = new Random();
     }
 }
