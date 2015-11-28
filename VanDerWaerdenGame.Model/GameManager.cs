@@ -22,17 +22,15 @@ namespace VanDerWaerdenGame.Model
         private IPositionPlayer player1;
         public IColorPlayer Player2 { get { return player2; } set { SetProperty(ref player2, value); } }
         private IColorPlayer player2;
-        public bool GameFinished { get { return gameStarted; } set { SetProperty(ref gameStarted, value); } }
-
-        private bool gameStarted = false;
+        public bool GameFinished { get { return gameFinished; } set { SetProperty(ref gameFinished, value); } }
+        private bool gameFinished = false;
         
         public GameManager(IGameRules rules)
         {
             Board = new ObservableCollection<int>();
             Rules = rules;
             BindingOperations.EnableCollectionSynchronization(board, _lock);
-            this.GameFinished = false;
-
+            this.GameFinished = true;
         }
 
         /// <summary>
@@ -40,8 +38,6 @@ namespace VanDerWaerdenGame.Model
         /// </summary>
         public void NewGame()
         {
-            this.GameFinished = false;
-
             lock (_lock)
             {
                 Board.Clear();
@@ -53,10 +49,12 @@ namespace VanDerWaerdenGame.Model
         /// </summary>
         public void PlayTillEnd()
         {
+            GameFinished = false;
             while (!Rules.IsFinalStateOfGame(this.Board.ToArray()))
             {
                 IterateTurn();
             }
+            GameFinished = true;
         }
 
         /// <summary>
@@ -64,6 +62,8 @@ namespace VanDerWaerdenGame.Model
         /// </summary>
         public void IterateTurn()
         {
+            var restoreBool = GameFinished;
+            if (restoreBool) GameFinished = false;
             if (!Rules.IsFinalStateOfGame(Board.ToArray()))
             {
                 var nextPosition = player1.GetPosition(board.ToArray());
@@ -74,6 +74,7 @@ namespace VanDerWaerdenGame.Model
                 }
             }
             Thread.Sleep(500);
+            if (restoreBool) GameFinished = true;
         }
     }
 }

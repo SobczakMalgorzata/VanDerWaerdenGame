@@ -76,9 +76,11 @@
             </Button>
         </StackPanel>
         <ComboBox Grid.Row="1" VerticalAlignment="Center" Margin="20,0" 
+                  IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding PositionPlayers}" 
                   SelectedItem="{Binding GameManager.Player1, Mode=TwoWay}" />
         <ComboBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="20,0" 
+                  IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding ColorPlayers}" 
                   SelectedItem="{Binding GameManager.Player2, Mode=TwoWay}" />
 

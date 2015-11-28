@@ -16,7 +16,6 @@ namespace VanDerWaerdenGame.DesktopApp
         public MainWindowViewModel() : base()
         {
             //Player is loaded just to have static linking ot the Players assembly
-
             var plr = new RandomColorPlayer();
             
             ColorPlayers = AppDomain.CurrentDomain.GetAssemblies()
