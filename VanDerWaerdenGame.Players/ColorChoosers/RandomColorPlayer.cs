@@ -7,16 +7,13 @@ using VanDerWaerdenGame.Model;
 
 namespace VanDerWaerdenGame.Players.ColorChoosers
 {
-    public class RandomColorPlayer : IColorPlayer
+    public class RandomColorPlayer : ColorPlayerBase
     {
         private static Random rand = new Random();
 
-        private int nColors = 2;
-        public int NColors { get { return nColors; } set { nColors = value; } }
-
-        public int GetColor(BoardState board)
+        public override int GetColor(BoardState board)
         {
-            return rand.Next(0, nColors);
+            return rand.Next(0, NColors);
         }
 
     }

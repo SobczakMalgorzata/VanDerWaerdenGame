@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +8,9 @@ using VanDerWaerdenGame.Model;
 
 namespace VanDerWaerdenGame.Players.ColorChoosers
 {
-    public class NeuralColorPlayer : ColorPlayerBase
+    public class ManualColorPlayer : ColorPlayerBase
     {
+        
         public override int GetColor(BoardState board)
         {
             throw new NotImplementedException();
