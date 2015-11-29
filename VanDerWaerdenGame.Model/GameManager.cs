@@ -1,49 +1,80 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace VanDerWaerdenGame.Model
 {
-    public class GameManager
+    public class GameManager : BindableBase
     {
-        private int endGameLengthCondition;
-        public int EndGameLengthCondition
+        public ObservableCollection<int> Board { get { return board; }  private set { SetProperty(ref board, value); } }
+        private ObservableCollection<int> board;
+        private object _lock = new object();
+
+        public IGameRules Rules { get { return rules; } set { SetProperty(ref rules, value); } }
+        private IGameRules rules;
+        public IPositionPlayer Player1 { get { return player1; } set { SetProperty(ref player1, value); } }
+        private IPositionPlayer player1;
+        public IColorPlayer Player2 { get { return player2; } set { SetProperty(ref player2, value); } }
+        private IColorPlayer player2;
+        public bool GameFinished { get { return gameFinished; } set { SetProperty(ref gameFinished, value); } }
+        private bool gameFinished = false;
+        
+        public GameManager(IGameRules rules)
         {
-            get { return endGameLengthCondition; }
-            set { endGameLengthCondition = value; }
+            Board = new ObservableCollection<int>();
+            Rules = rules;
+            BindingOperations.EnableCollectionSynchronization(board, _lock);
+            this.GameFinished = true;
         }
 
-        public GameManager(int endGameLegthCondition)
+        /// <summary>
+        /// Starts the game loop.
+        /// </summary>
+        public void NewGame()
         {
-            this.endGameLengthCondition = endGameLegthCondition;
-        }
-        public static bool DetectProgression(int[] board, int progressionLength)
-        {
-            int distance = 0;
-            int distanceLimit = (board.Count()/progressionLength)+1;
-            for(distance = 1; distance <= distanceLimit; distance++)
+            lock (_lock)
             {
-                for (int front = 0; front < board.Count() - distance * (progressionLength-1); front++)
+                Board.Clear();
+            }
+        }
+        
+        /// <summary>
+        /// Makes moves till the game ends.
+        /// </summary>
+        public void PlayTillEnd()
+        {
+            GameFinished = false;
+            while (!Rules.IsFinalStateOfGame(this.Board.ToArray()))
+            {
+                IterateTurn();
+            }
+            GameFinished = true;
+        }
+
+        /// <summary>
+        /// Makes one move of each of players.
+        /// </summary>
+        public void IterateTurn()
+        {
+            var restoreBool = GameFinished;
+            if (restoreBool) GameFinished = false;
+            if (!Rules.IsFinalStateOfGame(Board.ToArray()))
+            {
+                var nextPosition = player1.GetPosition(board.ToArray());
+                var nextColor = player2.GetColor(new BoardState(board.ToArray(), nextPosition));
+                lock (_lock)
                 {
-                    if (DetectProgression(board, progressionLength, front, distance))
-                        return true;
+                    Board.Insert(nextPosition, nextColor);
                 }
             }
-            return false;
-        }
-        public static bool DetectProgression(int[] board, int progressionLength, int front, int distance)
-        {
-            var color = board[front];
-            progressionLength--;
-            for(int i = front+distance; i < board.Length && progressionLength > 0; progressionLength--)
-            {
-                if (color != board[i])
-                    return false;
-                i += distance;
-            }
-            return true;
+            Thread.Sleep(500);
+            if (restoreBool) GameFinished = true;
         }
     }
 }

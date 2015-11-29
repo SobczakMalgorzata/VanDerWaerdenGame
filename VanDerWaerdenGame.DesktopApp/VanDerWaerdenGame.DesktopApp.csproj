@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VanDerWaerdenGame.DesktopApp</RootNamespace>
     <AssemblyName>VanDerWaerdenGame.DesktopApp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -74,12 +75,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BoardToElipsesConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -112,21 +115,9 @@
       <Project>{5f8ccc63-8f9e-4744-970d-61d378f92a54}</Project>
       <Name>VanDerWaerdenGame.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VanDerWaerdenGame.Players\ColorChooser\NeuralColorPlayer\NeuralColorPlayer.csproj">
-      <Project>{fff9a1b1-1e27-4843-b3ff-dd257d70c8b9}</Project>
-      <Name>NeuralColorPlayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VanDerWaerdenGame.Players\ColorChooser\RandomColorPlayer\RandomColorPlayer.csproj">
-      <Project>{42747142-7418-4b2b-83d9-35871e5184cd}</Project>
-      <Name>RandomColorPlayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VanDerWaerdenGame.Players\PositionChoosers\NeuralPositionPlayer\NeuralPositionPlayer.csproj">
-      <Project>{e00b90bd-a8c3-41a6-8387-58eed1fd3a82}</Project>
-      <Name>NeuralPositionPlayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VanDerWaerdenGame.Players\PositionChoosers\RandomPositionPlayer\RandomPositionPlayer.csproj">
-      <Project>{c971a903-27bb-4d6e-bc7b-15ccfd0379b4}</Project>
-      <Name>RandomPositionPlayer</Name>
+    <ProjectReference Include="..\VanDerWaerdenGame.Players\VanDerWaerdenGame.Players.csproj">
+      <Project>{d8b06f8d-5dd6-459e-ab57-0dce5c57702f}</Project>
+      <Name>VanDerWaerdenGame.Players</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
