@@ -9,7 +9,26 @@ namespace VanDerWaerdenGame.Model
 {
     public class VanDerWaerdenGameRules : BindableBase, IGameRules
     {
-        public int EndGameProgressionLength { get { return endGameProgressionLength; } set { SetProperty(ref endGameProgressionLength, value); } }
+        public int NColors
+        {
+            get { return nColors; }
+            set
+            {
+                if (value < 2)
+                    throw new ArgumentOutOfRangeException();
+                nColors = value;
+            }
+        }
+        private int nColors = 2;
+        public int EndGameProgressionLength
+        {
+            get { return endGameProgressionLength; }
+            set
+            {
+                if (value < 3) throw new ArgumentOutOfRangeException();
+                SetProperty(ref endGameProgressionLength, value);
+            }
+        }
         private int endGameProgressionLength = 3;
 
         public bool IsFinalStateOfGame(int[] board)
@@ -57,6 +76,33 @@ namespace VanDerWaerdenGame.Model
                 i += distance;
             }
             return true;
+        }
+
+        public static int VanDerWaerdenNumber(int r, int k)
+        {
+            if (r < 2 || k < 2)
+                throw new ArgumentOutOfRangeException();
+            if (r == 2)
+            {
+                switch (k)
+                {
+                    case 3:
+                        return 9;
+                    case 4:
+                        return 35;
+                    case 5:
+                        return 178;
+                    case 6:
+                        return 1132;
+                    default:
+                        break;
+                }
+            }
+            else if (r == 3 && k == 3) return 27;
+            else if (r == 3 && k == 4) return 293;
+            else if (r == 4 && k == 3) return 76;
+
+            throw new ArgumentOutOfRangeException();
         }
     }
 }
