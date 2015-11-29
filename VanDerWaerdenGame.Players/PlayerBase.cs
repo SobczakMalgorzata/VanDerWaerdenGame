@@ -11,9 +11,13 @@ namespace VanDerWaerdenGame.Players
     {
         public abstract string PlayerName { get; }
 
-        public int NColors { get { return nColors; } set { nColors = value; } }
+        public int NColors { get { return nColors; } set { SetProperty(ref nColors, value); } }
         protected int nColors = 2;
-        public int ProgressionLength { get { return progressionLength; } set { progressionLength = value; } }
+        public int ProgressionLength { get { return progressionLength; } set { SetProperty(ref progressionLength, value); } }
         protected int progressionLength = 3;
+
+        protected virtual void OnNColorsChanged() { }
+        protected virtual void OnProgressionLengthChanged() { }
+
     }
 }
