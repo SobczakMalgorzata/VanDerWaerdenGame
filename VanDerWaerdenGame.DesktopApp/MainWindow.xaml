@@ -42,39 +42,57 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button x:Name="StartGameButton" Click="StartGameButton_Click">
-                <Viewbox Width="48" Height="48" RenderTransformOrigin="0.5,0.5" >
-                    <Viewbox.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                            <SkewTransform AngleY="0" AngleX="0"/>
-                            <RotateTransform Angle="90"/>
-                        </TransformGroup>
-                    </Viewbox.RenderTransform>
-                    <Canvas Width="24" Height="24">
-                        <Path Data="M19,12H22.32L17.37,16.95L12.42,12H16.97C17,10.46 16.42,8.93 15.24,7.75C12.9,5.41 9.1,5.41 6.76,7.75C4.42,10.09 4.42,13.9 6.76,16.24C8.6,18.08 11.36,18.47 13.58,17.41L15.05,18.88C12,20.69 8,20.29 5.34,17.65C2.22,14.53 2.23,9.47 5.35,6.35C8.5,3.22 13.53,3.21 16.66,6.34C18.22,7.9 19,9.95 19,12Z" Fill="Black" />
-                    </Canvas>
-                </Viewbox>
-            </Button>
-            <Button x:Name="NextTurnButton" Click="NextTurnButton_Click">
-                <Grid>
-                    <Viewbox Width="48" Height="48">
+        <Grid  Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button x:Name="StartGameButton" Click="StartGameButton_Click">
+                    <Viewbox Width="48" Height="48" RenderTransformOrigin="0.5,0.5" >
+                        <Viewbox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                <SkewTransform AngleY="0" AngleX="0"/>
+                                <RotateTransform Angle="90"/>
+                            </TransformGroup>
+                        </Viewbox.RenderTransform>
                         <Canvas Width="24" Height="24">
-                            <Path Data="M8,5.14V19.14L19,12.14L8,5.14Z" Fill="Black" />
+                            <Path Data="M19,12H22.32L17.37,16.95L12.42,12H16.97C17,10.46 16.42,8.93 15.24,7.75C12.9,5.41 9.1,5.41 6.76,7.75C4.42,10.09 4.42,13.9 6.76,16.24C8.6,18.08 11.36,18.47 13.58,17.41L15.05,18.88C12,20.69 8,20.29 5.34,17.65C2.22,14.53 2.23,9.47 5.35,6.35C8.5,3.22 13.53,3.21 16.66,6.34C18.22,7.9 19,9.95 19,12Z" Fill="Black" />
                         </Canvas>
                     </Viewbox>
-                    <TextBlock Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="14.667"  />
-                </Grid>
-            </Button>
-            <Button x:Name="PlayTillEndButton" Click="PlayTillEndButton_Click">
-                <Viewbox Width="48" Height="48">
-                    <Canvas Width="24" Height="24">
-                        <Path Data="M16,18.14H18V6.14H16M6,18.14L14.5,12.14L6,6.14V18.14Z" Fill="Black" />
-                    </Canvas>
-                </Viewbox>
-            </Button>
-        </StackPanel>
+                </Button>
+                <Button x:Name="NextTurnButton" Click="NextTurnButton_Click">
+                    <Grid>
+                        <Viewbox Width="48" Height="48">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M8,5.14V19.14L19,12.14L8,5.14Z" Fill="Black" />
+                            </Canvas>
+                        </Viewbox>
+                        <TextBlock Text="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="14.667"  />
+                    </Grid>
+                </Button>
+                <Button x:Name="PlayTillEndButton" Click="PlayTillEndButton_Click">
+                    <Viewbox Width="48" Height="48">
+                        <Canvas Width="24" Height="24">
+                            <Path Data="M16,18.14H18V6.14H16M6,18.14L14.5,12.14L6,6.14V18.14Z" Fill="Black" />
+                        </Canvas>
+                    </Viewbox>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="10">
+                <TextBlock Text="k - length of progression:" />
+                <TextBox Text="{Binding GameManager.Rules.EndGameProgressionLength}" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+                <TextBlock Text="r - number of colors:" />
+                <TextBox Text="{Binding GameManager.Rules.NColors}" />
+            </StackPanel>
+        </Grid>
         <ComboBox Grid.Row="1" VerticalAlignment="Center" Margin="20,0" 
                   IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding PositionPlayers}" 
