@@ -7,7 +7,7 @@ using VanDerWaerdenGame.Model;
 
 namespace VanDerWaerdenGame.Players.PositionChoosers
 {
-    public abstract class PositionPlayerBase : IPositionPlayer
+    public abstract class PositionPlayerBase : PlayerBase, IPositionPlayer
     {
         public abstract int GetPosition(int[] board);
     }

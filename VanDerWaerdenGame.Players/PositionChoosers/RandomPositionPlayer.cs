@@ -9,11 +9,14 @@ namespace VanDerWaerdenGame.Players.PositionChoosers
 {
     public class RandomPositionPlayer : PositionPlayerBase
     {
+        public override string PlayerName { get { return "Random Player"; } }
+
         public override int GetPosition(int[] board)
         {
             return rand.Next(0, board.Count()+1);
         }
 
         private static Random rand = new Random();
+
     }
 }
