@@ -71,12 +71,13 @@
     <Compile Include="ColorChoosers\RandomColorPlayer.cs" />
     <Compile Include="GradingFunctions.cs" />
     <Compile Include="PlayerBase.cs" />
+    <Compile Include="PositionChoosers\NeuralPositionPlayer1.cs" />
     <Compile Include="PositionChoosers\PositionPlayerBase.cs" />
     <Compile Include="PositionChoosers\RandomPositionPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\Programming\Uczelnia\Neural Networks\VanDerWaerdenGame\VanDerWaerdenGame.Model\VanDerWaerdenGame.Model.csproj">
+    <ProjectReference Include="..\VanDerWaerdenGame.Model\VanDerWaerdenGame.Model.csproj">
       <Project>{5f8ccc63-8f9e-4744-970d-61d378f92a54}</Project>
       <Name>VanDerWaerdenGame.Model</Name>
     </ProjectReference>
