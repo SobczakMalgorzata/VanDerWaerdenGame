@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace VanDerWaerdenGame.Model
 {
-    public interface IPositionPlayer
+    public interface IGameRules
     {
-        int GetPosition(int[] board); 
+        bool IsFinalStateOfGame(int[] board);
     }
 }

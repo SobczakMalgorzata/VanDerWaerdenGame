@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RandomColorPlayer")]
+[assembly: AssemblyTitle("VanDerWaerden.Players")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RandomColorPlayer")]
+[assembly: AssemblyProduct("VanDerWaerden.Players")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("81dde8ef-53ea-416d-9b09-0b7ad114f92d")]
+[assembly: Guid("d8b06f8d-5dd6-459e-ab57-0dce5c57702f")]
 
 // Version information for an assembly consists of the following four values:
 //
