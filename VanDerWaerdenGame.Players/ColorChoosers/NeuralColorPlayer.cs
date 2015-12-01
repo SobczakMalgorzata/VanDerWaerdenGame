@@ -13,19 +13,19 @@ using System.Diagnostics;
 
 namespace VanDerWaerdenGame.Players.ColorChoosers
 {
-    public class NeuralColorPlayer : ColorPlayerBase
+    public class NeuralColorPlayer : ColorPlayerBase, ITrainable
     {
         public override string PlayerName { get { return "Neural network Player"; } }
 
         public NeuralColorPlayer()
         {
-            ConstructNetwork();
+            this.Network = ConstructNetwork();
             this.PropertyChanged += NetworkParametersChanged;
         }
         private void NetworkParametersChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(NColors) || e.PropertyName == nameof(ProgressionLength))
-                ConstructNetwork();
+                this.Network = ConstructNetwork();
         }
 
         public override int GetColor(BoardState board)
@@ -36,13 +36,14 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
         }
 
         public BasicNetwork Network { get; set; }
-        private void ConstructNetwork()
+        private BasicNetwork ConstructNetwork()
         {
-            Network = new BasicNetwork();
-            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
-            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
-            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, this.NColors));
-            Network.Structure.FinalizeStructure();
+            var network = new BasicNetwork();
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, this.NColors));
+            network.Structure.FinalizeStructure();
+            return network;
             Debug.Print("Created new Network with parameters nColors = {0} and progression length = {1}.", NColors, ProgressionLength);
         }
     }

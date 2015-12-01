@@ -9,5 +9,7 @@ namespace VanDerWaerdenGame.Model
     public interface IGameRules
     {
         bool IsFinalStateOfGame(int[] board);
+        double CalculateColorPlayerScore(int[] scores);
+        double CalculatePositionPlayerScore(int[] scores);
     }
 }
