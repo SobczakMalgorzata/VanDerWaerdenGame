@@ -72,13 +72,34 @@ namespace VanDerWaerdenGame.Model
             if (restoreBool) GameFinished = false;
             if (!Rules.IsFinalStateOfGame(Board.ToArray()))
             {
-                var nextPosition = player1.GetPosition(board.ToArray());
-                var nextColor = player2.GetColor(new BoardState(board.ToArray(), nextPosition));
+                MakeMove();
+            }
+            if (restoreBool) GameFinished = true;
+        }
+
+        public void MakeMove()
+        {
+            var restoreBool = GameFinished;
+            if (restoreBool) GameFinished = false;
+
+            if (!Rules.IsFinalStateOfGame(Board.ToArray()))
+            {
                 lock (_lock)
                 {
-                    Board.Insert(nextPosition, nextColor);
+                    if (Board.Any(x => x == -1))
+                    {
+                        var nextPosition = Board.IndexOf(-1);
+                        var nextColor = player2.GetColor(new BoardState(Board.ToArray(), nextPosition));
+                        Board[nextPosition] = nextColor;
+                    }
+                    else
+                    {
+                        var nextPosition = player1.GetPosition(Board.ToArray());
+                        Board.Insert(nextPosition, -1);
+                    }
                 }
             }
+
             if (restoreBool) GameFinished = true;
         }
 
