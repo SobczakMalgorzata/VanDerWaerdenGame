@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:VanDerWaerdenGame.DesktopApp"
         xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="VanDerWaerdenGame.DesktopApp.MainWindow"
-        Title="MainWindow" Height="350" Width="1000">
+        Title="MainWindow" Height="450" Width="1000">
     <Window.Resources>
         <Style x:Key="DotStyle" TargetType="{x:Type Ellipse}" >
             <Setter Property="Height" Value="100"/>
@@ -29,7 +29,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <ItemsControl Grid.ColumnSpan="3" HorizontalAlignment="Center" 
+        <ItemsControl x:Name="BoardVisualization" Grid.ColumnSpan="3" HorizontalAlignment="Center" 
 			ItemsSource="{Binding GameManager.Board}" >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -42,12 +42,13 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Grid  Grid.Column="1" Grid.Row="1">
+        <Grid x:Name="ControlPanel" Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -92,16 +93,33 @@
                 <TextBlock Text="r - number of colors:" />
                 <TextBox Text="{Binding GameManager.Rules.NColors}" />
             </StackPanel>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button x:Name="TrainPlayersButton" Click="TrainPlayersButton_Click">
+                    <StackPanel Orientation="Horizontal" Margin="8,0">
+                        <Viewbox Width="48" Height="48">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" Fill="Black" />
+                            </Canvas>
+                        </Viewbox>
+                        <TextBlock Text="Training" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667"  />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </Grid>
-        <ComboBox Grid.Row="1" VerticalAlignment="Center" Margin="20,0" 
+        <StackPanel x:Name="Player1Panel" Grid.Row="1" VerticalAlignment="Center" Margin="20,0">
+            <CheckBox IsChecked="{Binding ShouldTrainP1}" Content="Train" />
+            <ComboBox  
                   IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding PositionPlayers}" 
                   SelectedItem="{Binding GameManager.Player1, Mode=TwoWay}" />
-        <ComboBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="20,0" 
+        </StackPanel>
+        <StackPanel x:Name="Plaeyr2Panel" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="20,0" >
+            <CheckBox IsChecked="{Binding ShouldTrainP2}" Content="Train" />
+            <ComboBox
                   IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding ColorPlayers}" 
                   SelectedItem="{Binding GameManager.Player2, Mode=TwoWay}" />
-
+        </StackPanel>
 
 
 

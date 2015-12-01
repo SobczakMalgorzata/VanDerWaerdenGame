@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Encog.Neural.Networks.Training;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using Encog.ML;
 
 namespace VanDerWaerdenGame.Model
 {
@@ -23,6 +25,8 @@ namespace VanDerWaerdenGame.Model
         public IColorPlayer Player2 { get { return player2; } set { SetProperty(ref player2, value); } }
         private IColorPlayer player2;
         public bool GameFinished { get { return gameFinished; } set { SetProperty(ref gameFinished, value); } }
+
+
         private bool gameFinished = false;
         
         public GameManager(IGameRules rules)
@@ -47,12 +51,14 @@ namespace VanDerWaerdenGame.Model
         /// <summary>
         /// Makes moves till the game ends.
         /// </summary>
-        public void PlayTillEnd()
+        public void PlayTillEnd(bool visible)
         {
             GameFinished = false;
             while (!Rules.IsFinalStateOfGame(this.Board.ToArray()))
             {
                 IterateTurn();
+                if(visible)
+                    Thread.Sleep(500);
             }
             GameFinished = true;
         }
@@ -73,8 +79,14 @@ namespace VanDerWaerdenGame.Model
                     Board.Insert(nextPosition, nextColor);
                 }
             }
-            Thread.Sleep(500);
             if (restoreBool) GameFinished = true;
+        }
+
+        public int PlayGame()
+        {
+            NewGame();
+            PlayTillEnd(false);
+            return Board.Count();
         }
     }
 }
