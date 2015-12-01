@@ -71,6 +71,7 @@
     <Compile Include="ColorChoosers\RandomColorPlayer.cs" />
     <Compile Include="GradingFunctions.cs" />
     <Compile Include="PlayerBase.cs" />
+    <Compile Include="PlayersTrainer.cs" />
     <Compile Include="PositionChoosers\PositionPlayerBase.cs" />
     <Compile Include="PositionChoosers\RandomPositionPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

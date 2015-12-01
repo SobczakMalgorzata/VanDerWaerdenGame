@@ -10,6 +10,5 @@ namespace VanDerWaerdenGame.Model
     public interface ITrainable
     {
         BasicNetwork Network { get; set; }
-        BasicNetwork ConstructNetwork();
     }
 }
