@@ -31,7 +31,7 @@ namespace VanDerWaerdenGame.Players.PositionChoosers
 
         public override int GetPosition(int[] board)
         {
-            var input = new BasicMLData();
+            var input = new BasicMLData(Array.ConvertAll(board, x => (double)x));
             int position = Network.Winner(input);
             return position;
         }
@@ -42,7 +42,7 @@ namespace VanDerWaerdenGame.Players.PositionChoosers
             Network = new BasicNetwork();
             Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
             Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
-            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, this.ProgressionLength + 1));
+            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
             Network.Structure.FinalizeStructure();
             Debug.Print("Created new Network with parameters nColors = {0} and progression length = {1}.", NColors, ProgressionLength);
         }
