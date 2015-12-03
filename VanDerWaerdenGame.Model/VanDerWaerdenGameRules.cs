@@ -16,7 +16,7 @@ namespace VanDerWaerdenGame.Model
             {
                 if (value < 2)
                     throw new ArgumentOutOfRangeException();
-                nColors = value;
+                SetProperty(ref nColors, value);
             }
         }
         private int nColors = 2;
