@@ -10,6 +10,7 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
     public class RandomColorPlayer : ColorPlayerBase
     {
         public override string PlayerName { get { return "Random Player"; } }
+        public RandomColorPlayer(VanDerWaerdenGameRules rules) : base(rules) { }
 
         public override int GetColor(BoardState board)
         {

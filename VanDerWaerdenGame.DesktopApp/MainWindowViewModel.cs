@@ -18,19 +18,25 @@ namespace VanDerWaerdenGame.DesktopApp
         public MainWindowViewModel() : base()
         {
             //Player is loaded just to have static linking ot the Players assembly
-            var plr = new RandomColorPlayer();
+            var plr = new RandomColorPlayer(GameManager.Rules as VanDerWaerdenGameRules);
 
             ColorPlayers = AppDomain.CurrentDomain.GetAssemblies()
                         .SelectMany(s => s.GetTypes())
                         .Where(p => typeof(IColorPlayer).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract)
-                        .Select(t => (IColorPlayer)Activator.CreateInstance(t))
+                        .Select(t => (IColorPlayer)Activator.CreateInstance(t, GameManager.Rules))
                         .ToList();
 
             PositionPlayers = AppDomain.CurrentDomain.GetAssemblies()
                         .SelectMany(s => s.GetTypes())
                         .Where(p => typeof(IPositionPlayer).IsAssignableFrom(p) && p.IsClass && !p.IsAbstract)
-                        .Select(t => (IPositionPlayer)Activator.CreateInstance(t))
+                        .Select(t => (IPositionPlayer)Activator.CreateInstance(t, GameManager.Rules))
                         .ToList();
+
+            foreach (PlayerBase player in ColorPlayers)
+                player.Rules = gameManager.Rules as VanDerWaerdenGameRules;
+            foreach (PlayerBase player in ColorPlayers)
+                player.Rules = gameManager.Rules as VanDerWaerdenGameRules;
+
             GameManager.Player1 = PositionPlayers.Last();
             GameManager.Player2 = ColorPlayers.Last();
         }

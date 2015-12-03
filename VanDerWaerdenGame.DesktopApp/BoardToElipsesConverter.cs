@@ -12,7 +12,7 @@ namespace VanDerWaerdenGame.DesktopApp
 {
     public class BoardToElipsesConverter : IValueConverter
     {
-        private static List<SolidColorBrush> Colors = new List<SolidColorBrush> {Brushes.Blue, Brushes.Red, Brushes.LightGoldenrodYellow};
+        private static List<SolidColorBrush> Colors = new List<SolidColorBrush> {Brushes.Blue, Brushes.Red, Brushes.LightGoldenrodYellow, Brushes.Olive};
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

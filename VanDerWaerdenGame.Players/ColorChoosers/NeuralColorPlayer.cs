@@ -16,17 +16,14 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
     public class NeuralColorPlayer : ColorPlayerBase, ITrainable
     {
         public override string PlayerName { get { return "Neural network Player"; } }
-
-        public NeuralColorPlayer()
+     
+        public NeuralColorPlayer(VanDerWaerdenGameRules rules) : base(rules)
         {
             this.Network = ConstructNetwork();
-            this.PropertyChanged += NetworkParametersChanged;
         }
-        private void NetworkParametersChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(NColors) || e.PropertyName == nameof(ProgressionLength))
-                this.Network = ConstructNetwork();
-        }
+
+        protected override void OnNColorsChanged(int newValue) { ConstructNetwork(); }
+        protected override void OnProgressionLengthChanged(int newValue) { ConstructNetwork(); }
 
         public override int GetColor(BoardState board)
         {

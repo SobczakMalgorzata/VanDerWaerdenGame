@@ -43,7 +43,7 @@ namespace VanDerWaerdenGame.Players
 
         public override double CalculateScore(IMLMethod network)
         {
-            gameManager.Player2 = new NeuralColorPlayer() { Network = network as BasicNetwork };
+            gameManager.Player2 = new NeuralColorPlayer(gameManager.Rules as VanDerWaerdenGameRules) { Network = network as BasicNetwork };
             var scores = new int[NGames];
             for (int i = 0; i < NGames; i++)
                 scores[i] = gameManager.PlayGame();
@@ -65,7 +65,7 @@ namespace VanDerWaerdenGame.Players
 
         public override double CalculateScore(IMLMethod network)
         {
-            gameManager.Player1 = new NeuralPositionPlayer1() { Network = network as BasicNetwork };
+            gameManager.Player1 = new NeuralPositionPlayer1(gameManager.Rules as VanDerWaerdenGameRules) { Network = network as BasicNetwork };
             var scores = new int[NGames];
             for (int i = 0; i < NGames; i++)
                 scores[i] = gameManager.PlayGame();
