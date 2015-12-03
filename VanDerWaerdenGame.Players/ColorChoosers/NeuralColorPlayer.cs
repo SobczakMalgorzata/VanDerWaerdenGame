@@ -22,8 +22,8 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
             this.Network = ConstructNetwork();
         }
 
-        protected override void OnNColorsChanged(int newValue) { ConstructNetwork(); }
-        protected override void OnProgressionLengthChanged(int newValue) { ConstructNetwork(); }
+        protected override void OnNColorsChanged(int newValue) { Network = ConstructNetwork(); }
+        protected override void OnProgressionLengthChanged(int newValue) { Network = ConstructNetwork(); }
 
         public override int GetColor(BoardState board)
         {

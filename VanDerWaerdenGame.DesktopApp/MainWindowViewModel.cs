@@ -61,18 +61,31 @@ namespace VanDerWaerdenGame.DesktopApp
         
         public void TrainPlayers()
         {
-            if (ShouldTrainP1 && GameManager.Player1 is ITrainable)
-                Train(GameManager.Player1 as ITrainable, new PositionPlayerTrainer(GameManager.Rules, gameManager.Player2));
-            if (ShouldTrainP2 && GameManager.Player2 is ITrainable)
-                Train(GameManager.Player2 as ITrainable, new ColorPlayerTrainer(GameManager.Rules, gameManager.Player1));
-        }
-        private void Train(ITrainable player, PlayersTrainerBase trainer)
-        {
-            var train = new NeuralSimulatedAnnealing(
-                player.Network, trainer, 10, 2, 200);
+            ITrainable P1 = GameManager.Player1 as ITrainable;
+            ITrainable P2 = GameManager.Player2 as ITrainable;
+            PositionPlayerTrainer P1Trainer = new PositionPlayerTrainer(GameManager.Rules, gameManager.Player2);
+            ColorPlayerTrainer P2Trainer = new ColorPlayerTrainer(GameManager.Rules, gameManager.Player1);
+            NeuralSimulatedAnnealing training1 = null, training2 = null;
+
+            if(P1!=null)
+                training1 = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 10, 2, 200);
+            if(P2!=null)
+                training2 = new NeuralSimulatedAnnealing(P2.Network, P2Trainer, 10, 2, 200);
 
             for (int i = 0; i < NTrainingIterations; i++)
-                train.Iteration();
+            {
+                if (ShouldTrainP1 && P1 != null)
+                {
+                    training1.Iteration();
+                }
+                if (ShouldTrainP2 && P2 != null)
+                {
+                    training2.Iteration();
+                }
+            }
+            
+
+            
         }
     }
    
