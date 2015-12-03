@@ -14,33 +14,35 @@ using System.Diagnostics;
 
 namespace VanDerWaerdenGame.Players.PositionChoosers
 {
-    public class NeuralPositionPlayer1 : PositionPlayerBase
+    public class NeuralPositionPlayer1 : PositionPlayerBase, ITrainable
     {
         public override string PlayerName { get { return "Neural network Player"; } }
 
         public NeuralPositionPlayer1(VanDerWaerdenGameRules rules) : base(rules)
         {
-            ConstructNetwork();
+            this.Network = ConstructNetwork();
+
         }
 
-        protected override void OnNColorsChanged(int newValue)              { ConstructNetwork(); }
-        protected override void OnProgressionLengthChanged(int newValue)    { ConstructNetwork(); }
-        
+        protected override void OnNColorsChanged(int newValue)              { Network = ConstructNetwork(); }
+        protected override void OnProgressionLengthChanged(int newValue)    { Network = ConstructNetwork(); }
+
         public override int GetPosition(int[] board)
         {
-            var input = new BasicMLData(Array.ConvertAll(board, x => (double)x));
-            int position = Network.Winner(input);
-            return position;
+            var input = new BasicMLData(board.Select(x => (double)x).Concat(new double[Network.InputCount - board.Count()]).ToArray<double>());
+            var position = (Network.Compute(input)[0]+1)/2;
+            return (int)(position*board.Count());
         }
 
         public BasicNetwork Network { get; set; }
-        private void ConstructNetwork()
+        private BasicNetwork ConstructNetwork()
         {
-            Network = new BasicNetwork();
-            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
-            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
-            Network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
-            Network.Structure.FinalizeStructure();
+            var network = new BasicNetwork();
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength) - 1));
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, VanDerWaerdenGameRules.VanDerWaerdenNumber(this.NColors, this.ProgressionLength)));
+            network.AddLayer(new BasicLayer(new ActivationTANH(), true, 1));
+            network.Structure.FinalizeStructure();
+            return network;
             Debug.Print("Created new Network with parameters nColors = {0} and progression length = {1}.", NColors, ProgressionLength);
         }
     }
