@@ -10,6 +10,7 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
 {
     public class ManualColorPlayer : ColorPlayerBase
     {
+        public ManualColorPlayer(VanDerWaerdenGameRules rules) : base(rules) { }
         public override string PlayerName {  get { return "Manual Player"; } }
         public override int GetColor(BoardState board)
         {

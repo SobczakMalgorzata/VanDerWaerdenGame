@@ -4,20 +4,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VanDerWaerdenGame.Model;
+using System.ComponentModel;
 
 namespace VanDerWaerdenGame.Players
 {
-    public abstract class PlayerBase : BindableBase
+    public abstract class PlayerBase : BindableBase, IDisposable
     {
+        public PlayerBase(VanDerWaerdenGameRules rules)
+        {
+            Rules = rules;
+            Rules.PropertyChanged += OnGameRulesPropertiesChanged;
+        }
+
         public abstract string PlayerName { get; }
 
-        public int NColors { get { return nColors; } set { SetProperty(ref nColors, value); } }
-        protected int nColors = 2;
-        public int ProgressionLength { get { return progressionLength; } set { SetProperty(ref progressionLength, value); } }
-        protected int progressionLength = 3;
+        public VanDerWaerdenGameRules Rules {get; set;}
+        public int NColors { get { return Rules.NColors; } }
+        public int ProgressionLength { get { return Rules.EndGameProgressionLength; } }
 
-        protected virtual void OnNColorsChanged() { }
-        protected virtual void OnProgressionLengthChanged() { }
 
+        private void OnGameRulesPropertiesChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Rules.NColors))
+                OnNColorsChanged(Rules.NColors);
+            if (e.PropertyName == nameof(Rules.EndGameProgressionLength))
+                OnProgressionLengthChanged(Rules.EndGameProgressionLength);
+        }
+        protected virtual void OnNColorsChanged(int newValue) { }
+        protected virtual void OnProgressionLengthChanged(int newValue) { }
+
+        public void Dispose()
+        {
+            Rules.PropertyChanged -= OnGameRulesPropertiesChanged;
+        }
     }
 }

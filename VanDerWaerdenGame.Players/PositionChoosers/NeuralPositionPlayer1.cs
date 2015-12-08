@@ -18,16 +18,14 @@ namespace VanDerWaerdenGame.Players.PositionChoosers
     {
         public override string PlayerName { get { return "Neural network Player"; } }
 
-        public NeuralPositionPlayer1()
+        public NeuralPositionPlayer1(VanDerWaerdenGameRules rules) : base(rules)
         {
             this.Network = ConstructNetwork();
-            this.PropertyChanged += NetworkParametersChanged;
+
         }
-        private void NetworkParametersChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(NColors) || e.PropertyName == nameof(ProgressionLength))
-                this.Network = ConstructNetwork();
-        }
+
+        protected override void OnNColorsChanged(int newValue)              { Network = ConstructNetwork(); }
+        protected override void OnProgressionLengthChanged(int newValue)    { Network = ConstructNetwork(); }
 
         public override int GetPosition(int[] board)
         {
