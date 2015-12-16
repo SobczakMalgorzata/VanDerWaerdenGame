@@ -48,5 +48,11 @@ namespace VanDerWaerdenGame.DesktopApp
             ViewModel.TrainPlayers();
             //Task.Factory.StartNew(ViewModel.TrainPlayers);
         }
+
+        private void ResetAndPlayTillEnd_Click(object sender, RoutedEventArgs e)
+        {
+            StartGameButton_Click(sender, e);
+            PlayTillEndButton_Click(sender, e);
+        }
     }
 }

@@ -58,7 +58,8 @@ namespace VanDerWaerdenGame.DesktopApp
         public int NTrainingIterations { get { return nTrainingIterations; } set { SetProperty(ref nTrainingIterations, value); } }
         private int nTrainingIterations = 200;
 
-        
+        //Niech gracz uczy się na podstawie N rozgrywek przeciwnika z losowcem?
+        //Niech obie sieci dostają wynik rozgrywki... wymaga własnej implementacji.
         public void TrainPlayers()
         {
             ITrainable P1 = GameManager.Player1 as ITrainable;
@@ -68,9 +69,9 @@ namespace VanDerWaerdenGame.DesktopApp
             NeuralSimulatedAnnealing training1 = null, training2 = null;
 
             if(P1!=null)
-                training1 = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 10, 2, 200);
+                training1 = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 10, 2, this.NTrainingIterations);
             if(P2!=null)
-                training2 = new NeuralSimulatedAnnealing(P2.Network, P2Trainer, 10, 2, 200);
+                training2 = new NeuralSimulatedAnnealing(P2.Network, P2Trainer, 10, 2, this.NTrainingIterations);
 
             for (int i = 0; i < NTrainingIterations; i++)
             {
