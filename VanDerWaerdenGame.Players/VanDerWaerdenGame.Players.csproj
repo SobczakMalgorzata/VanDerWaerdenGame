@@ -63,10 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorChoosers\ColorPlayerBase.cs" />
-    <Compile Include="ColorChoosers\ManualColorPlayer.cs" />
-    <Compile Include="ColorChoosers\ManualColorWindow.xaml.cs">
-      <DependentUpon>ManualColorWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ColorChoosers\MeanColorPlayer.cs" />
     <Compile Include="ColorChoosers\NeuralColorPlayer.cs" />
     <Compile Include="ColorChoosers\RandomColorPlayer.cs" />
     <Compile Include="GradingFunctions.cs" />
@@ -82,12 +79,6 @@
       <Project>{5f8ccc63-8f9e-4744-970d-61d378f92a54}</Project>
       <Name>VanDerWaerdenGame.Model</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="ColorChoosers\ManualColorWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
