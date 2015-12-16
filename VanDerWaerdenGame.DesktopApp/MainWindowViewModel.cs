@@ -57,6 +57,10 @@ namespace VanDerWaerdenGame.DesktopApp
         private bool shouldTrainP2;
         public int NTrainingIterations { get { return nTrainingIterations; } set { SetProperty(ref nTrainingIterations, value); } }
         private int nTrainingIterations = 200;
+        public int NRandomTrainingGames { get { return nRandomTrainingGames; } set { SetProperty(ref nRandomTrainingGames, value); } }
+        private int nRandomTrainingGames = 1;
+
+
 
         //Niech gracz uczy się na podstawie N rozgrywek przeciwnika z losowcem?
         //Niech obie sieci dostają wynik rozgrywki... wymaga własnej implementacji.
@@ -64,14 +68,14 @@ namespace VanDerWaerdenGame.DesktopApp
         {
             ITrainable P1 = GameManager.Player1 as ITrainable;
             ITrainable P2 = GameManager.Player2 as ITrainable;
-            PositionPlayerTrainer P1Trainer = new PositionPlayerTrainer(GameManager.Rules, gameManager.Player2);
-            ColorPlayerTrainer P2Trainer = new ColorPlayerTrainer(GameManager.Rules, gameManager.Player1);
+            PositionPlayerTrainer P1Trainer = new PositionPlayerTrainer(GameManager.Rules, gameManager.Player2) { NGames = this.NRandomTrainingGames };
+            ColorPlayerTrainer P2Trainer = new ColorPlayerTrainer(GameManager.Rules, gameManager.Player1) { NGames = this.NRandomTrainingGames };
             NeuralSimulatedAnnealing training1 = null, training2 = null;
 
             if(P1!=null)
-                training1 = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 10, 2, this.NTrainingIterations);
+                training1 = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 20, 2, this.NTrainingIterations);
             if(P2!=null)
-                training2 = new NeuralSimulatedAnnealing(P2.Network, P2Trainer, 10, 2, this.NTrainingIterations);
+                training2 = new NeuralSimulatedAnnealing(P2.Network, P2Trainer, 20, 2, this.NTrainingIterations);
 
             for (int i = 0; i < NTrainingIterations; i++)
             {

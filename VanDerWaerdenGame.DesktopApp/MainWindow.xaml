@@ -27,9 +27,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <ItemsControl x:Name="BoardVisualization" Grid.ColumnSpan="3" HorizontalAlignment="Center" 
 			ItemsSource="{Binding GameManager.Board}" >
@@ -123,8 +123,17 @@
                     <sys:Int32>4</sys:Int32>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="TrainPlayersButton" Click="TrainPlayersButton_Click">
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="8">
+                    <Label># of iterations</Label>
+                    <TextBox Text="{Binding NTrainingIterations}" />
+                </StackPanel>
+                <Button x:Name="TrainPlayersButton" Grid.Column="1" Click="TrainPlayersButton_Click" Margin="8">
                     <StackPanel Orientation="Horizontal" Margin="8,0">
                         <Viewbox Width="48" Height="48">
                             <Canvas Width="24" Height="24">
@@ -134,7 +143,11 @@
                         <TextBlock Text="Training" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667"  />
                     </StackPanel>
                 </Button>
-            </StackPanel>
+                <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="8">
+                    <Label># of random games</Label>
+                    <TextBox Text="{Binding NRandomTrainingGames}" />
+                </StackPanel>
+            </Grid>
         </Grid>
         <StackPanel x:Name="Player1Panel" Grid.Row="1" VerticalAlignment="Center" Margin="20,0">
             <CheckBox IsChecked="{Binding ShouldTrainP1}" Content="Train" />
