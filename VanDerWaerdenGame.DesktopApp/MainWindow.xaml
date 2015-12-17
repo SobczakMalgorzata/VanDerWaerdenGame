@@ -5,7 +5,7 @@
         xmlns:local="clr-namespace:VanDerWaerdenGame.DesktopApp"
         xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" 
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        Title="MainWindow" Height="450" Width="1000">
+        Title="MainWindow" Height="550" Width="1000">
     <Window.Resources>
         <Style x:Key="DotStyle" TargetType="{x:Type Ellipse}" >
             <Setter Property="Height" Value="100"/>
@@ -15,7 +15,7 @@
             <Setter Property="StrokeThickness" Value="5" />
         </Style>
         <local:BoardToElipsesConverter x:Key="ColorConverter"/>
-
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibility" />
     </Window.Resources>
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -52,7 +52,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button x:Name="StartGameButton" Click="StartGameButton_Click">
@@ -129,6 +129,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="8">
                     <Label># of iterations</Label>
                     <TextBox Text="{Binding NTrainingIterations}" />
@@ -140,12 +144,19 @@
                                 <Path Data="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" Fill="Black" />
                             </Canvas>
                         </Viewbox>
-                        <TextBlock Text="Training" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667"  />
+                        <TextBlock Text="Training" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667"  Visibility="{Binding IsTraining, Converter={StaticResource BoolToVisibility}, ConverterParameter=false}"/>
+                        <TextBlock Text="{Binding TrainingIteration}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14.667" Visibility="{Binding IsTraining, Converter={StaticResource BoolToVisibility}}"/>
                     </StackPanel>
                 </Button>
                 <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="8">
                     <Label># of random games</Label>
                     <TextBox Text="{Binding NRandomTrainingGames}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Width="70" Height="35" Margin="8,0"/>
+                    <Button Width="70" Height="35" Margin="8,0"/>
+                    <Button x:Name="TestPlayersButton" Width="70" Height="35" Margin="8,0" Content="Test players" Click="TestPlayersButton_Click"/>
+                    <Button Width="70" Height="35" Margin="8,0" Content="Test to file"/>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -155,6 +166,7 @@
                   IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding PositionPlayers}" 
                   SelectedItem="{Binding GameManager.Player1, Mode=TwoWay}" />
+            <TextBlock Text="{Binding P1Efficiency}" FontSize="21.333" Foreground="#FF00DCFF"/>
         </StackPanel>
         <StackPanel x:Name="Plaeyr2Panel" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="20,0" >
             <CheckBox IsChecked="{Binding ShouldTrainP2}" Content="Train" />
@@ -162,6 +174,7 @@
                   IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding ColorPlayers}" 
                   SelectedItem="{Binding GameManager.Player2, Mode=TwoWay}" />
+            <TextBlock Text="{Binding P2Efficiency}" FontSize="21.333" Foreground="#FF00DCFF"/>
         </StackPanel>
 
 

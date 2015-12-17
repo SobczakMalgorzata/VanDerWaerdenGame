@@ -45,7 +45,7 @@ namespace VanDerWaerdenGame.DesktopApp
 
         private void TrainPlayersButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.TrainPlayers();
+            Task.Factory.StartNew(ViewModel.TrainPlayers);
             //Task.Factory.StartNew(ViewModel.TrainPlayers);
         }
 
@@ -53,6 +53,11 @@ namespace VanDerWaerdenGame.DesktopApp
         {
             StartGameButton_Click(sender, e);
             PlayTillEndButton_Click(sender, e);
+        }
+
+        private void TestPlayersButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.TestPlayers();
         }
     }
 }

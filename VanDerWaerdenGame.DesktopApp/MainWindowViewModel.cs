@@ -55,8 +55,20 @@ namespace VanDerWaerdenGame.DesktopApp
         private bool shouldTrainP1;
         public bool ShouldTrainP2 { get { return shouldTrainP2; } set { SetProperty(ref shouldTrainP2, value); } }
         private bool shouldTrainP2;
+        public double P1Efficiency { get { return p1Efficiency; } set { SetProperty(ref p1Efficiency, value); } }
+        private double p1Efficiency;
+        public double P2Efficiency { get { return p2Efficiency; } set { SetProperty(ref p2Efficiency, value); } }
+        private double p2Efficiency;
+        public bool IsTraining { get { return isTraining; } set { SetProperty(ref isTraining, value); } }
+        private bool isTraining;
+
+
+
         public int NTrainingIterations { get { return nTrainingIterations; } set { SetProperty(ref nTrainingIterations, value); } }
         private int nTrainingIterations = 200;
+        public int TrainingIteration { get { return trainingIteration; } set { SetProperty(ref trainingIteration, value); } }
+        private int trainingIteration = 0;
+
         public int NRandomTrainingGames { get { return nRandomTrainingGames; } set { SetProperty(ref nRandomTrainingGames, value); } }
         private int nRandomTrainingGames = 1;
 
@@ -66,6 +78,10 @@ namespace VanDerWaerdenGame.DesktopApp
         //Niech obie sieci dostają wynik rozgrywki... wymaga własnej implementacji.
         public void TrainPlayers()
         {
+            IsTraining = true;
+
+            TrainingIteration = 0;
+
             ITrainable P1 = GameManager.Player1 as ITrainable;
             ITrainable P2 = GameManager.Player2 as ITrainable;
             PositionPlayerTrainer P1Trainer = new PositionPlayerTrainer(GameManager.Rules, gameManager.Player2) { NGames = this.NRandomTrainingGames };
@@ -77,7 +93,9 @@ namespace VanDerWaerdenGame.DesktopApp
             if(P2!=null)
                 training2 = new NeuralSimulatedAnnealing(P2.Network, P2Trainer, 20, 2, this.NTrainingIterations);
 
-            for (int i = 0; i < NTrainingIterations; i++)
+
+            
+            for (; TrainingIteration < NTrainingIterations; TrainingIteration++)
             {
                 if (ShouldTrainP1 && P1 != null)
                 {
@@ -89,8 +107,12 @@ namespace VanDerWaerdenGame.DesktopApp
                 }
             }
             
+            IsTraining = false;
+        }
 
-            
+        public void TestPlayers(string fileName = null)
+        {
+
         }
     }
    
