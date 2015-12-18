@@ -79,6 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppendGameLogger.cs" />
     <Compile Include="BoardToElipsesConverter.cs" />
     <Compile Include="BoolToVIsibilityConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">

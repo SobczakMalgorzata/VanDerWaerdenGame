@@ -10,6 +10,7 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
 {
     public class MeanColorPlayer : ColorPlayerBase
     {
+        private static int counter = 0;
         public MeanColorPlayer(VanDerWaerdenGameRules rules) : base(rules) { }
         public override string PlayerName { get { return "Mean Player"; } }
         public override int GetColor(BoardState board)
@@ -22,7 +23,8 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
                 if (!Rules.IsFinalStateOfGame(board.BoardColors))
                     possibleMoves.Add(color);
             }
-            var rand = new Random();
+            var rand = new Random(counter);
+            counter = ++counter % int.MaxValue;
             if (possibleMoves.Count < 1)
                 return rand.Next(Rules.NColors);
             return possibleMoves[rand.Next(possibleMoves.Count)];

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +60,16 @@ namespace VanDerWaerdenGame.DesktopApp
         private void TestPlayersButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.TestPlayers();
+        }
+
+        private void TestToFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog();
+            dialog.Filter = "Comma separated values files (*.csv)|*.csv";
+
+            if (dialog.ShowDialog() == true)
+                //Task.Factory.StartNew(() =>ViewModel.TestPlayers(dialog.FileName));
+                ViewModel.TestPlayers(dialog.FileName);
         }
     }
 }

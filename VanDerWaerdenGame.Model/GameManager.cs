@@ -26,6 +26,7 @@ namespace VanDerWaerdenGame.Model
         private IColorPlayer player2;
         public bool GameFinished { get { return gameFinished; } set { SetProperty(ref gameFinished, value); } }
 
+        public IGameLogger Logger { get; set; }
 
         private bool gameFinished = false;
         
@@ -60,6 +61,7 @@ namespace VanDerWaerdenGame.Model
                 if(visible)
                     Thread.Sleep(500);
             }
+            Logger?.SaveGame();
             GameFinished = true;
         }
 
@@ -91,11 +93,13 @@ namespace VanDerWaerdenGame.Model
                         var nextPosition = Board.IndexOf(-1);
                         var nextColor = player2.GetColor(new BoardState(Board.ToArray(), nextPosition));
                         Board[nextPosition] = nextColor;
+                        Logger?.LogColorMove(nextColor);
                     }
                     else
                     {
                         var nextPosition = player1.GetPosition(Board.ToArray());
                         Board.Insert(nextPosition, -1);
+                        Logger?.LogPositionMove(nextPosition);
                     }
                 }
             }

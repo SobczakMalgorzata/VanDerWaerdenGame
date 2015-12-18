@@ -40,7 +40,8 @@ namespace VanDerWaerdenGame.DesktopApp
                     v = true;
                 else
                     v = false;
-                if (parameter is bool && (bool)parameter == false)
+                if ((parameter is bool && (bool)parameter == false) ||
+                   (parameter is string && !Boolean.Parse(parameter as string)))
                     return !v;
                 return v;
             }

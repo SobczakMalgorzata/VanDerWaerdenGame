@@ -10,6 +10,7 @@ using VanDerWaerdenGame.Players.ColorChoosers;
 using VanDerWaerdenGame.Players.PositionChoosers;
 using VanDerWaerdenGame.Players;
 using Encog.Neural.Networks.Training.Anneal;
+using System.IO;
 
 namespace VanDerWaerdenGame.DesktopApp
 {
@@ -47,9 +48,9 @@ namespace VanDerWaerdenGame.DesktopApp
         public GameManager GameManager { get { return gameManager; } set { SetProperty(ref gameManager, value); } }
         private GameManager gameManager = new GameManager(new VanDerWaerdenGameRules());
 
-        public void StartNewGame() { this.GameManager.NewGame(); }
-        public void Turn() { this.GameManager.IterateTurn(); }
-        public void PlayTillEnd() { this.GameManager.PlayTillEnd(true); }
+        public void StartNewGame() { Task.Factory.StartNew(GameManager.NewGame); }
+        public void Turn() { Task.Factory.StartNew(GameManager.IterateTurn); }
+        public void PlayTillEnd() { Task.Factory.StartNew(() => GameManager.PlayTillEnd(true)); }
 
         public bool ShouldTrainP1 { get { return shouldTrainP1; } set { SetProperty(ref shouldTrainP1, value); } }
         private bool shouldTrainP1;
@@ -112,7 +113,20 @@ namespace VanDerWaerdenGame.DesktopApp
 
         public void TestPlayers(string fileName = null)
         {
+            var gm = new GameManager(this.GameManager.Rules) {
+                Player1 = GameManager.Player1,
+                Player2 = GameManager.Player2,
+            };
+            if (fileName != null)
+                gm.Logger = new AppendGameLogger(fileName);
 
+            List<int> gameLengths = new List<int>();
+            for (int i = 0; i < NTrainingIterations; i++)
+            {
+                //gm.NewGame();
+                gameLengths.Add(gm.PlayGame());
+            }
+            P1Efficiency = P2Efficiency = gameLengths.Average();
         }
     }
    
