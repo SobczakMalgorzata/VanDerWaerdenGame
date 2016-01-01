@@ -134,8 +134,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="8">
-                    <Label># of iterations</Label>
-                    <TextBox Text="{Binding NTrainingIterations}" />
+                    <Label>Step Size</Label>
+                    <TextBox Text="{Binding StepSize}" />
                 </StackPanel>
                 <Button x:Name="TrainPlayersButton" Grid.Column="1" Click="TrainPlayersButton_Click" Margin="8">
                     <StackPanel Orientation="Horizontal" Margin="8,0">
@@ -149,8 +149,8 @@
                     </StackPanel>
                 </Button>
                 <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="8">
-                    <Label># of random games</Label>
-                    <TextBox Text="{Binding NRandomTrainingGames}" />
+                    <Label># of games per difficulty level</Label>
+                    <TextBox Text="{Binding NStepGames}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Width="70" Height="35" Margin="8,0"/>
@@ -169,12 +169,12 @@
             <TextBlock Text="{Binding P1Efficiency}" FontSize="21.333" Foreground="#FF00DCFF"/>
         </StackPanel>
         <StackPanel x:Name="Plaeyr2Panel" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="20,0" >
-            <CheckBox IsChecked="{Binding ShouldTrainP2}" Content="Train" />
+            <!--<CheckBox IsChecked="{Binding ShouldTrainP2}" Content="Train" />-->
             <ComboBox
                   IsEnabled="{Binding GameManager.GameFinished}"
                   ItemsSource="{Binding ColorPlayers}" 
                   SelectedItem="{Binding GameManager.Player2, Mode=TwoWay}" />
-            <TextBlock Text="{Binding P2Efficiency}" FontSize="21.333" Foreground="#FF00DCFF"/>
+            <!--<TextBlock Text="{Binding P2Efficiency}" FontSize="21.333" Foreground="#FF00DCFF"/>-->
         </StackPanel>
 
 

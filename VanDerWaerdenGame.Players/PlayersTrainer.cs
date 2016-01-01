@@ -73,4 +73,25 @@ namespace VanDerWaerdenGame.Players
         }
     }
 
+    public class PositionStepTrainer : PlayersTrainerBase
+    {
+        public PositionStepTrainer(IGameRules rules) : base(rules) { gameManager.Player2 = new MeanColorPlayer(this.gameManager.Rules as VanDerWaerdenGameRules); }
+        public double Distortion { get { return distortion; } set { SetProperty(ref distortion, value); } }
+        private double distortion;
+        
+        public override double CalculateScore(IMLMethod network)
+        {
+            this.gameManager.Player1 = new NeuralPositionPlayer1(gameManager.Rules as VanDerWaerdenGameRules) { Network = network as BasicNetwork };
+            ((MeanColorPlayer)this.gameManager.Player2).Distortion = this.Distortion;
+            var scores = new int[NGames];
+            for (int i = 0; i < NGames; i++)
+                scores[i] = gameManager.PlayGame();
+            return CalculateScore(scores);
+        }
+
+        protected override double CalculateScore(int[] scores)
+        {
+            return scores.Average();
+        }
+    }
 }

@@ -53,61 +53,52 @@ namespace VanDerWaerdenGame.DesktopApp
         public void PlayTillEnd() { Task.Factory.StartNew(() => GameManager.PlayTillEnd(true)); }
 
         public bool ShouldTrainP1 { get { return shouldTrainP1; } set { SetProperty(ref shouldTrainP1, value); } }
-        private bool shouldTrainP1;
-        public bool ShouldTrainP2 { get { return shouldTrainP2; } set { SetProperty(ref shouldTrainP2, value); } }
-        private bool shouldTrainP2;
+        private bool shouldTrainP1 = true;
+        //public bool ShouldTrainP2 { get { return shouldTrainP2; } set { SetProperty(ref shouldTrainP2, value); } }
+        //private bool shouldTrainP2;
         public double P1Efficiency { get { return p1Efficiency; } set { SetProperty(ref p1Efficiency, value); } }
         private double p1Efficiency;
-        public double P2Efficiency { get { return p2Efficiency; } set { SetProperty(ref p2Efficiency, value); } }
-        private double p2Efficiency;
+        //public double P2Efficiency { get { return p2Efficiency; } set { SetProperty(ref p2Efficiency, value); } }
+        //private double p2Efficiency;
         public bool IsTraining { get { return isTraining; } set { SetProperty(ref isTraining, value); } }
         private bool isTraining;
-
-
-
-        public int NTrainingIterations { get { return nTrainingIterations; } set { SetProperty(ref nTrainingIterations, value); } }
-        private int nTrainingIterations = 200;
+        
+        public int NTestingIterations { get { return nTrainingIterations; } set { SetProperty(ref nTrainingIterations, value); } }
+        private int nTrainingIterations = 5000;
         public int TrainingIteration { get { return trainingIteration; } set { SetProperty(ref trainingIteration, value); } }
         private int trainingIteration = 0;
 
-        public int NRandomTrainingGames { get { return nRandomTrainingGames; } set { SetProperty(ref nRandomTrainingGames, value); } }
-        private int nRandomTrainingGames = 1;
-
-
-
-        //Niech gracz uczy się na podstawie N rozgrywek przeciwnika z losowcem?
-        //Niech obie sieci dostają wynik rozgrywki... wymaga własnej implementacji.
-        public void TrainPlayers()
+        public double StepSize { get { return stepSize; } set { SetProperty(ref stepSize, value); } }
+        private double stepSize = 0.01;
+        public int NStepGames { get { return nStepGames; } set { SetProperty(ref nStepGames, value); } }
+        private int nStepGames = 100;
+        
+        public void TrainPositionPlayer()
         {
             IsTraining = true;
 
             TrainingIteration = 0;
+            var nSteps = (int)Math.Ceiling(1.0 / StepSize);
 
             ITrainable P1 = GameManager.Player1 as ITrainable;
-            ITrainable P2 = GameManager.Player2 as ITrainable;
-            PositionPlayerTrainer P1Trainer = new PositionPlayerTrainer(GameManager.Rules, gameManager.Player2) { NGames = this.NRandomTrainingGames };
-            ColorPlayerTrainer P2Trainer = new ColorPlayerTrainer(GameManager.Rules, gameManager.Player1) { NGames = this.NRandomTrainingGames };
-            NeuralSimulatedAnnealing training1 = null, training2 = null;
+            var P1Trainer = new PositionStepTrainer(GameManager.Rules);
+            NeuralSimulatedAnnealing training = null;
 
-            if(P1!=null)
-                training1 = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 20, 2, this.NTrainingIterations);
-            if(P2!=null)
-                training2 = new NeuralSimulatedAnnealing(P2.Network, P2Trainer, 20, 2, this.NTrainingIterations);
-
-
-            
-            for (; TrainingIteration < NTrainingIterations; TrainingIteration++)
+            if (P1 != null)
             {
-                if (ShouldTrainP1 && P1 != null)
-                {
-                    training1.Iteration();
-                }
-                if (ShouldTrainP2 && P2 != null)
-                {
-                    training2.Iteration();
-                }
+                training = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 20, 2, nSteps * NStepGames);
+
+                if (ShouldTrainP1)
+                    for (int i = 0; i < nSteps; i++)
+                    {
+                        P1Trainer.Distortion = 1 - i * StepSize;
+                        for (int j = 0; j < NStepGames; j++)
+                        {
+                            training.Iteration();
+                            TrainingIteration++;
+                        }
+                    }
             }
-            
             IsTraining = false;
         }
 
@@ -121,12 +112,12 @@ namespace VanDerWaerdenGame.DesktopApp
                 gm.Logger = new AppendGameLogger(fileName);
 
             List<int> gameLengths = new List<int>();
-            for (int i = 0; i < NTrainingIterations; i++)
+            for (int i = 0; i < NTestingIterations; i++)
             {
                 //gm.NewGame();
                 gameLengths.Add(gm.PlayGame());
             }
-            P1Efficiency = P2Efficiency = gameLengths.Average();
+            P1Efficiency = gameLengths.Average();
         }
     }
    
