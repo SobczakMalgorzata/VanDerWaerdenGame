@@ -9,6 +9,7 @@ namespace VanDerWaerdenGame.Players.PositionChoosers
 {
     public abstract class PositionPlayerBase : PlayerBase, IPositionPlayer
     {
+        public PositionPlayerBase(VanDerWaerdenGameRules rules) : base(rules) { }
         public abstract int GetPosition(int[] board);
     }
 }

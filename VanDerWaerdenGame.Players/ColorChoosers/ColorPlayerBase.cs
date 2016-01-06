@@ -9,6 +9,7 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
 {
     public abstract class ColorPlayerBase : PlayerBase, IColorPlayer
     {
-       public abstract int GetColor(BoardState board);
+        public ColorPlayerBase(VanDerWaerdenGameRules rules) : base(rules) { }
+        public abstract int GetColor(BoardState board);
     }
 }

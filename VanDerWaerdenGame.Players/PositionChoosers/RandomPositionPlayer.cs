@@ -10,6 +10,7 @@ namespace VanDerWaerdenGame.Players.PositionChoosers
     public class RandomPositionPlayer : PositionPlayerBase
     {
         public override string PlayerName { get { return "Random Player"; } }
+        public RandomPositionPlayer(VanDerWaerdenGameRules rules) : base(rules) { }
 
         public override int GetPosition(int[] board)
         {

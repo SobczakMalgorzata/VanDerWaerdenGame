@@ -16,7 +16,7 @@ namespace VanDerWaerdenGame.Model
             {
                 if (value < 2)
                     throw new ArgumentOutOfRangeException();
-                nColors = value;
+                SetProperty(ref nColors, value);
             }
         }
         private int nColors = 2;
@@ -104,5 +104,49 @@ namespace VanDerWaerdenGame.Model
 
             throw new ArgumentOutOfRangeException();
         }
+
+        public static int GetNColorsFromWNumber(int W)
+        {
+            switch (W)
+            {
+                case 9:
+                case 35:
+                case 178:
+                case 1132:
+                    return 2;
+                case 27:
+                case 293:
+                    return 3;
+                case 76:
+                    return 4;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(W));
+            }
+        }
+
+        public static int GetProgressionLengthFromWNumber(int W)
+        {
+            switch (W)
+            {
+                case 9:
+                case 27:
+                case 76:
+                    return 3;
+                case 35:
+                case 293:
+                    return 4;
+                case 178:
+                    return 5;
+                case 1132:
+                    return 6;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(W));
+            }
+        }
+
+        public double CalculateColorPlayerScore(int[] scores)       { return scores.Select(score => ScoringCurve(score)).Average(); }
+        public double CalculatePositionPlayerScore(int[] scores)    { return scores.Select(score => ScoringCurve(-score)).Average(); }
+
+        private double ScoringCurve(int score) { return Math.Pow(0.35, 4 - score); }
     }
 }
