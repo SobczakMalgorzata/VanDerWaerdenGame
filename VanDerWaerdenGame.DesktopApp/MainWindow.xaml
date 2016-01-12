@@ -153,8 +153,6 @@
                     <TextBox Text="{Binding NStepGames}" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="70" Height="35" Margin="8,0"/>
-                    <Button Width="70" Height="35" Margin="8,0"/>
                     <Button x:Name="TestPlayersButton" Width="70" Height="35" Margin="8,0" Content="Test players" Click="TestPlayersButton_Click"/>
                     <Button x:Name="TestToFileButton" Width="70" Height="35" Margin="8,0" Content="Test to file" Click="TestToFileButton_Click"/>
                 </StackPanel>

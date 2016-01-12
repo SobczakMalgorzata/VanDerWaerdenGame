@@ -29,7 +29,7 @@ namespace VanDerWaerdenGame.DesktopApp
         public void SaveGame()
         {
             if(movesHistory.Count > 0)
-                File.AppendAllLines(FileName, new string[] {string.Join(";", movesHistory)} );
+                File.AppendAllLines(FileName, new string[] {Math.Ceiling(movesHistory.Count/2.0) + ";" + string.Join(";", movesHistory)} );
             movesHistory.Clear();
         }
     }

@@ -68,8 +68,11 @@ namespace VanDerWaerdenGame.DesktopApp
             dialog.Filter = "Comma separated values files (*.csv)|*.csv";
 
             if (dialog.ShowDialog() == true)
-                //Task.Factory.StartNew(() =>ViewModel.TestPlayers(dialog.FileName));
+            {//Task.Factory.StartNew(() =>ViewModel.TestPlayers(dialog.FileName));
+                if (File.Exists(dialog.FileName))
+                    File.Delete(dialog.FileName);
                 ViewModel.TestPlayers(dialog.FileName);
+            }
         }
     }
 }
