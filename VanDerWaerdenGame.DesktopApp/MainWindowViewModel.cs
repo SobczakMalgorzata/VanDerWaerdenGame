@@ -38,8 +38,58 @@ namespace VanDerWaerdenGame.DesktopApp
             foreach (PlayerBase player in ColorPlayers)
                 player.Rules = gameManager.Rules as VanDerWaerdenGameRules;
 
-            GameManager.Player1 = PositionPlayers.Last();
+            GameManager.Player1 = PositionPlayers.First();
             GameManager.Player2 = ColorPlayers.Last();
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Count() > 1)
+                RunForCommandLineParams(args);
+        }
+
+        private void RunForCommandLineParams(string[] args)
+        {
+            var parameters = new Dictionary<string, string>();
+            for (int index = 1; index < args.Length; index += 2)
+                parameters.Add(args[index], args[index + 1]);
+
+            var rules = this.GameManager.Rules as VanDerWaerdenGameRules;
+            rules.EndGameProgressionLength = int.Parse(parameters["k"]);
+            rules.NColors = int.Parse(parameters["r"]);
+
+            this.StepSize = double.Parse(parameters["step"]);
+            this.NStepGames = int.Parse(parameters["itperstep"]);
+
+            this.TMax = int.Parse(parameters["tmax"]);
+            this.TMin = int.Parse(parameters["tmin"]);
+
+            TrainPositionPlayer();
+
+            if (parameters["opponent"].Equals("mean", StringComparison.InvariantCultureIgnoreCase) || parameters["opponent"].Equals("both", StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.GameManager.Player2 = new MeanColorPlayer(rules);
+                TestPlayers(string.Format("r{0}_k{1}_step{2:00000}_itperstep{3:0000}_tmax{4:000}_tmin{5:000}_{6}{7}.csv",
+                    rules.NColors, rules.EndGameProgressionLength,
+                    this.StepSize*10000, this.NStepGames,
+                    this.TMax, this.TMin,
+                    "mean",
+                    parameters.ContainsKey("try") ? parameters["try"] : ""
+                    ));
+            }
+            if (parameters["opponent"].Equals("rand", StringComparison.InvariantCultureIgnoreCase) || parameters["opponent"].Equals("both", StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.GameManager.Player2 = new RandomColorPlayer(rules);
+                TestPlayers(string.Format("r{0}_k{1}_step{2:00000}_itperstep{3:0000}_tmax{4:000}_tmin{5:000}_{6}{7}.csv",
+                    rules.NColors, rules.EndGameProgressionLength,
+                    this.StepSize*10000, this.NStepGames,
+                    this.TMax, this.TMin,
+                    "rand",
+                    parameters.ContainsKey("try") ? parameters["try"] : ""
+                    ));
+            }
+            else
+                throw new ArgumentException("You have not provided proper value of opponent paramerter (mean/rand/both)");
+            
+            App.Current.Shutdown();
         }
 
         public List<IColorPlayer> ColorPlayers { get; set; }
@@ -48,9 +98,9 @@ namespace VanDerWaerdenGame.DesktopApp
         public GameManager GameManager { get { return gameManager; } set { SetProperty(ref gameManager, value); } }
         private GameManager gameManager = new GameManager(new VanDerWaerdenGameRules());
 
-        public void StartNewGame() { Task.Factory.StartNew(GameManager.NewGame); }
-        public void Turn() { Task.Factory.StartNew(GameManager.IterateTurn); }
-        public void PlayTillEnd() { Task.Factory.StartNew(() => GameManager.PlayTillEnd(true)); }
+        public async Task StartNewGame() { await Task.Factory.StartNew(GameManager.NewGame); }
+        public async Task Turn() { await Task.Factory.StartNew(GameManager.IterateTurn); }
+        public async Task PlayTillEnd() { await Task.Factory.StartNew(() => GameManager.PlayTillEnd(true)); }
 
         public bool ShouldTrainP1 { get { return shouldTrainP1; } set { SetProperty(ref shouldTrainP1, value); } }
         private bool shouldTrainP1 = true;
@@ -69,10 +119,15 @@ namespace VanDerWaerdenGame.DesktopApp
         private int trainingIteration = 0;
 
         public double StepSize { get { return stepSize; } set { SetProperty(ref stepSize, value); } }
-        private double stepSize = 0.01;
+        private double stepSize = 0.05;
         public int NStepGames { get { return nStepGames; } set { SetProperty(ref nStepGames, value); } }
-        private int nStepGames = 100;
-        
+        private int nStepGames = 35;
+
+        public int TMax { get { return tmax; } set { SetProperty(ref tmax, value); } }
+        private int tmax = 20;
+        public int TMin { get { return tmin; } set { SetProperty(ref tmin, value); } }
+        private int tmin = 2;
+
         public void TrainPositionPlayer()
         {
             IsTraining = true;
@@ -86,7 +141,7 @@ namespace VanDerWaerdenGame.DesktopApp
 
             if (P1 != null)
             {
-                training = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, 20, 2, nSteps * NStepGames);
+                training = new NeuralSimulatedAnnealing(P1.Network, P1Trainer, TMax, TMin, nSteps * NStepGames);
 
                 if (ShouldTrainP1)
                     for (int i = 0; i < nSteps; i++)

@@ -13,13 +13,13 @@ namespace VanDerWaerdenGame.Players.ColorChoosers
         private static int counter = (int)DateTime.Now.Ticks;
         public MeanColorPlayer(VanDerWaerdenGameRules rules) : base(rules) { }
         public double Distortion { get { return distortion; } set { SetProperty(ref distortion, value); } }
-        private double  distortion = 0;
+        private double distortion = 0;
         public override string PlayerName { get { return "Mean Player"; } }
         public override int GetColor(BoardState board)
         {
             var rand = new Random(counter);
 
-            if (rand.NextDouble() <= Distortion)
+            if (rand.NextDouble() < Distortion)
                 return rand.Next(Rules.NColors);
 
             List<int> possibleMoves = new List<int>();
