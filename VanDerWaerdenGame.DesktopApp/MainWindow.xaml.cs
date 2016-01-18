@@ -25,7 +25,7 @@ namespace VanDerWaerdenGame.DesktopApp
         public MainWindow()
         {
             InitializeComponent();
-            
+
         }
 
         public MainWindowViewModel ViewModel => this.DataContext as MainWindowViewModel;
@@ -48,7 +48,6 @@ namespace VanDerWaerdenGame.DesktopApp
         private void TrainPlayersButton_Click(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(ViewModel.TrainPositionPlayer);
-            //Task.Factory.StartNew(ViewModel.TrainPlayers);
         }
 
         private void ResetAndPlayTillEnd_Click(object sender, RoutedEventArgs e)
@@ -68,8 +67,11 @@ namespace VanDerWaerdenGame.DesktopApp
             dialog.Filter = "Comma separated values files (*.csv)|*.csv";
 
             if (dialog.ShowDialog() == true)
-                //Task.Factory.StartNew(() =>ViewModel.TestPlayers(dialog.FileName));
+            {//Task.Factory.StartNew(() =>ViewModel.TestPlayers(dialog.FileName));
+                if (File.Exists(dialog.FileName))
+                    File.Delete(dialog.FileName);
                 ViewModel.TestPlayers(dialog.FileName);
+            }
         }
     }
 }
